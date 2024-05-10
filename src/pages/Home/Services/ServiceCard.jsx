@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { IoMdArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
   console.log(service);
@@ -18,9 +19,12 @@ const ServiceCard = ({ service }) => {
         <h2 className="card-title font-bold mb-2">{title}</h2>
         <h2 className="card-title justify-between font-bold text-red-500 text-lg">
           Price: ${price}
-          <button className="hover:text-red-700 duration-200">
-            <IoMdArrowForward className="w-6 h-6" />
-          </button>
+          <Link to={`/checkout/${_id}`}>
+            <button className="hover:text-red-700 duration-200 flex items-center gap-1 text-sm">
+              Book Now
+              <IoMdArrowForward className="w-5 h-5" />
+            </button>
+          </Link>
         </h2>
       </div>
     </div>
