@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext } from "react";
 
 const CheckOut = () => {
   const service = useLoaderData();
-  const { title, price, _id } = service;
   const { user } = useContext(AuthContext);
+  const { title, price, _id, img } = service;
+  console.log(service);
 
   const handleBookService = (e) => {
     e.preventDefault();
@@ -13,17 +14,31 @@ const CheckOut = () => {
     const name = form.name.value;
     const date = form.date.value;
     const email = user?.email;
-    const dueAmount = form.dueAmount.value;
-    const orderInfo = {
+    // const dueAmount = form.dueAmount.value;
+    const bookingInfo = {
       customerName: name,
-      date,
-      email,
-      dueAmount,
-      service: _id,
       price: price,
+      email,
+      img,
+      date,
+      service: title,
+      service_id: _id,
     };
-    console.log(orderInfo);
+    console.log(bookingInfo);
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
+
   return (
     <div className="py-10 md:py-24">
       <h2 className="text-center md:text-3xl">Book Service : {title}</h2>
@@ -58,7 +73,7 @@ const CheckOut = () => {
               <span className="label-text">Email</span>
             </label>
             <input
-              type="email"
+              type="text"
               name="email"
               defaultValue={user?.email}
               placeholder="Your Email"
@@ -73,7 +88,7 @@ const CheckOut = () => {
             <input
               type="text"
               defaultValue={"$ " + price}
-              name="dueAmount"
+              // name="dueAmount"
               placeholder="Your Password"
               className="input input-bordered"
               required
