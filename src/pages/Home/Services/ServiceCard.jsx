@@ -4,7 +4,7 @@ import { IoMdArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
-  console.log(service);
+  // console.log(service);
   const { img, price, title, service_id, _id } = service;
   return (
     <div className="border-2 p-2 rounded-xl justify-between flex flex-col shadow-xl">

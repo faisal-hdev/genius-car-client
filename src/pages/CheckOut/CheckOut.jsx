@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const CheckOut = () => {
   const service = useLoaderData();
@@ -14,7 +16,6 @@ const CheckOut = () => {
     const name = form.name.value;
     const date = form.date.value;
     const email = user?.email;
-    // const dueAmount = form.dueAmount.value;
     const bookingInfo = {
       customerName: name,
       price: price,
@@ -36,6 +37,16 @@ const CheckOut = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        if (data.insertedId) {
+          // alert("Service Booking successfully");
+          Swal.fire({
+            position: "top-right",
+            icon: "success",
+            title: "Order Confirm Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       });
   };
 
